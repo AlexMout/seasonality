@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- HEADER WITH ALL NECESSARY PACKAGES -->
+    {%include 'header.html'%}
+
+    <!-- IMPORT CSS FILE IN STATIC FOLDER -->
+    <link href="{{url_for('static',filename='main.css')}}" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="{{url_for('static',filename='index.js')}}"></script>
+</head>
+<body>
+{% include 'navbar.html' %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <form class="col-lg-9" id="chart_form" method="post" action="get_chart" onsubmit="return validate_form()"
+              style="background-color:white; margin-top:30px; border-radius:9px;">
+            <div class="form-row" style="margin-top:10px;">
+                <div class="form-group col-lg">
+                    <label for="products_available">Select a product</label>
+                    <select id="products_available" name="product_selected" class="form-control">
+                        {% for product in products %}
+                        <option>{{product}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-lg">
+                    <label for="contracts_available">Select a contract</label>
+                    <select id="contracts_available" name="contract_selected" class="form-control"
+                            onchange="get_contracts({{maturities}})">
+                        {% for contract in contracts %}
+                        <option>{{contract}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-lg">
+                    <label for="maturity_available">Select a maturity</label>
+                    <select id="maturity_available" name="maturity_selected" class="form-control">
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-lg">
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="checkbox" name="overlap-checkbox" class="form-check-input">Overlap data
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-bottom:10px; border-radius:6px;">
+                Chart
+            </button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+<script type="text/javascript">
+function validate_form(){
+    return true;
+}
+
+//default value :
+$(document).ready(function(){
+    $('#contracts_available').val("Quarters").change();
+
+    var error_message = {{ error_message |safe }};
+    if (error_message != ""){
+    $(function(){ alert( error_message ); });
+}
+});
+
+</script>

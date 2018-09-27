@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- HEADER WITH ALL NECESSARY PACKAGES -->
+    {%include 'header.html'%}
+
+    <!-- IMPORT CSS FILE IN STATIC FOLDER -->
+    <link href="{{url_for('static',filename='chart_page.css')}}" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="{{url_for('static',filename='chart_page.js')}}"></script>
+</head>
+
+<body>
+{%include 'navbar.html'%}
+<div class="container-fluid">
+    <div class="row justify-content-center" style="height:70vh">
+        <div id="chart_container"></div>
+    </div>
+
+    <div class="row justify-content-center">
+        <table id="statistics-table" class="table table-hover table-dark col-lg-8" style="border-radius:10px;">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                {% for keys in returns %}
+                <th scope="col">{{keys}}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">Return</th>
+                {% for keys in returns %}
+                <td>{{ returns[keys] }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">Annualized volatility</th>
+                {% for keys in volatilities %}
+                <td>{{ volatilities[keys] }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">Min</th>
+                {% for keys in minimums %}
+                <td>{{ minimums[keys] }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">Max</th>
+                {% for keys in maximums %}
+                <td>{{ maximums[keys] }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th scope="row">Ratio days up/days down</th>
+                {% for keys in ratios %}
+                <td>{{ ratios[keys] }}</td>
+                {% endfor %}
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+var error_message = {{ error_message |safe }};
+if (error_message != ""){
+    $(function(){ alert( error_message ); });
+}
+
+create_graph_plotly({{quotes|tojson }}, {{dates|safe }}, {{product|safe }}, {{contract|safe }}, {{overlap_data|safe}});
+
+
+
+</script>
+</html>
