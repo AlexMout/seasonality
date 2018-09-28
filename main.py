@@ -8,7 +8,7 @@ app = Flask(__name__)
 def main_page():
     products, maturities, error = database_queries.get_data()
     # print(products ,maturities)
-    print(maturities)
+    # print(maturities)
     return render_template("index.html",
                            page_title="Seasonality Charting Tool",
                            title="PT DESK TOOL",
@@ -30,12 +30,12 @@ def display_chart():
                                                                                                           contract,
                                                                                                           maturity,
                                                                                                           overlap_data)
-    print(quotes)
+    """print(quotes)
     print(dates)
     print("Returns : {}".format(returns))
     print("Vol : {}".format(volatilities))
     print("Min {}".format(minimums))
-    print("Error : {}".format(error))
+    print("Error : {}".format(error))"""
 
     return render_template("chart_page.html", page_title="Chart " + product, quotes=quotes, dates=dates,
                            product=[product], contract=[contract], error_message=[error], returns=returns,
@@ -48,4 +48,4 @@ def page_not_found(e):
     return render_template("error-404.html", page_title="Not found...")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
