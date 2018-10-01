@@ -1,10 +1,11 @@
 from pydocumentdb import document_client
-from Engie.FlaskApp.model import parameters as keys
-from Engie.FlaskApp.model import calcutalor
+from model import parameters as keys
+from model import calcutalor
 import datetime as dt
 import itertools
 
 client = document_client.DocumentClient(keys.COSMOSDB_HOST, {'masterKey': keys.COSMOSDB_KEY})
+
 
 def get_data():
     """Function that retrieves all the available contracts and maturities for each products in the Azure database"""
@@ -234,8 +235,7 @@ def get_spread(quotes, dates, contract):
                         quotes[current_key][index_first_date + index_days + offset_1] - quotes[key_after][
                             index_days + offset_2])
 
-
-            #check_date(new_dates,new_quotes,quotes,dates)
+            # check_date(new_dates,new_quotes,quotes,dates)
         except IndexError:
             continue
         except Exception as e:

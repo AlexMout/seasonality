@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from Engie.FlaskApp.model import database_queries
+from model import database_queries
 
 app = Flask(__name__)
 
@@ -47,6 +47,7 @@ def display_chart():
 def page_not_found(e):
     return render_template("error-404.html", page_title="Not found...")
 
+
 if __name__ == "__main__":
-    #app.run(debug=True)
+    # app.run(debug=True)
     app.run()
